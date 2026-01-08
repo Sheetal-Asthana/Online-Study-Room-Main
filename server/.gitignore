@@ -1,0 +1,22 @@
+# Node dependencies
+node_modules/
+
+# Logs
+*.log
+
+# Env files
+.env
+.env.local
+
+# Build caches
+coverage/
+.cache/
+
+# Mongo dump files
+dump/
+
+# OS / Editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
