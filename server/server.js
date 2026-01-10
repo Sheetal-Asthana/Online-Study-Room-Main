@@ -326,31 +326,41 @@ socket.on("whiteboard-redo", (data) => {
 
   // Handle WebRTC offer
   socket.on("video-offer", ({ roomCode, offer, toUserId }) => {
-    console.log(`Video offer from ${socket.user.username} to ${toUserId} in ${roomCode}`);
-    socket.to(toUserId).emit("video-offer", {
-      offer,
-      fromUserId: socket.user.id,
-      fromUsername: socket.user.username
-    });
+  const room = roomMembers[roomCode];
+  if (!room) return;
+
+  const target = room.find(m => m.userId === toUserId);
+  if (!target || !target.socketId) return;
+
+  socket.to(target.socketId).emit("video-offer", {
+    offer,
+    fromUserId: socket.user.id,
+    fromUsername: socket.user.username
   });
+});
+
 
   // Handle WebRTC answer
   socket.on("video-answer", ({ roomCode, answer, toUserId }) => {
-    console.log(`Video answer from ${socket.user.username} to ${toUserId} in ${roomCode}`);
-    socket.to(toUserId).emit("video-answer", {
-      answer,
-      fromUserId: socket.user.id,
-      fromUsername: socket.user.username
-    });
+  const target = roomMembers[roomCode]?.find(m => m.userId === toUserId);
+  if (!target?.socketId) return;
+
+  socket.to(target.socketId).emit("video-answer", {
+    answer,
+    fromUserId: socket.user.id
   });
+});
 
   // Handle ICE candidates
   socket.on("video-ice-candidate", ({ roomCode, candidate, toUserId }) => {
-    socket.to(toUserId).emit("video-ice-candidate", {
-      candidate,
-      fromUserId: socket.user.id
-    });
+  const target = roomMembers[roomCode]?.find(m => m.userId === toUserId);
+  if (!target?.socketId) return;
+
+  socket.to(target.socketId).emit("video-ice-candidate", {
+    candidate,
+    fromUserId: socket.user.id
   });
+});;
 
   // Handle video toggle (mute/unmute video)
   socket.on("toggle-video", ({ roomCode, videoEnabled }) => {
