@@ -35,7 +35,10 @@ function Login() {
             await new Promise((resolve) => setTimeout(resolve, 500));
             const { data } = await API.post("/auth/login", formData); 
             localStorage.setItem("token", data.token);
-            localStorage.setItem("username", data.user.username);
+            localStorage.setItem("user", JSON.stringify({
+                id: data.user.id,
+                username: data.user.username
+             }));
 
             setSuccess("Login successful! Redirecting...");
             setTimeout(() => {
