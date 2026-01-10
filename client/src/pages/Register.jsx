@@ -41,7 +41,10 @@ function Register() {
             const { data } = await API.post("/auth/register", formData); 
 
             localStorage.setItem("token", data.token);
-            localStorage.setItem("username", data.user.username);
+            localStorage.setItem("user", JSON.stringify({
+                id: data.user.id,
+                username: data.user.username
+            }));
 
             setSuccess("Registration successful! Redirecting...");
             setTimeout(() => {
