@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "https://room-mm9u.onrender.com/api", 
+  baseURL: "https://online-study-room-main.onrender.com", 
     timeout: 10000,
 
 });
