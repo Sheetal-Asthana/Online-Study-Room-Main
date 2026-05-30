@@ -33,7 +33,7 @@ function Login() {
 
         try {
             await new Promise((resolve) => setTimeout(resolve, 500));
-            const { data } = await API.post("/auth/login", formData); 
+            const { data } = await API.post("/api/auth/login", formData); 
             localStorage.setItem("token", data.token);
             localStorage.setItem("user", JSON.stringify({
                 id: data.user.id,
