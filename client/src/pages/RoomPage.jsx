@@ -139,7 +139,7 @@ export default function RoomPage() {
         const token = localStorage.getItem("token");
         
         // Fetch room data
-        const roomRes = await API.get(`/rooms/${roomId}`, {
+        const roomRes = await API.get(`/api/rooms/${roomId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setRoom(roomRes.data);
