@@ -12,7 +12,7 @@ class SocketService {
     const token = localStorage.getItem('token');
     const username = localStorage.getItem('username') || 'User';
     
-    this.socket = io('http://localhost:9000', {
+    this.socket = io("https://online-study-room-main.onrender.com", {
       auth: {
         token: token,
         username: username
