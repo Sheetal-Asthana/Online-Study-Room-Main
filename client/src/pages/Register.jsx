@@ -38,7 +38,7 @@ function Register() {
 
         try {
             await new Promise((resolve) => setTimeout(resolve, 500));
-            const { data } = await API.post("/auth/register", formData); 
+            const { data } = await API.post("/api/auth/register", formData); 
 
             localStorage.setItem("token", data.token);
             localStorage.setItem("user", JSON.stringify({
