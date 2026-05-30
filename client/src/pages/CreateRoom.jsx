@@ -29,7 +29,7 @@ function CreateRoom() {
     e.preventDefault();
     try {
       const token = localStorage.getItem("token");
-      const res = await API.post("/rooms/create", formData, {
+      const res = await API.post("/api/rooms/create", formData, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setSuccess(`Room created! ID: ${res.data.roomId}`);
