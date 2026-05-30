@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import rainSound from "../assets/rain.mp3";
 
 const FocusSounds = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -14,7 +15,7 @@ const FocusSounds = () => {
       id: 'rain',
       name: 'Rain',
       description: 'Gentle rainfall',
-      url: 'soft-rain-sfx.wav',
+      url: rainSound,
       icon: '🌧️'
     },
     {
