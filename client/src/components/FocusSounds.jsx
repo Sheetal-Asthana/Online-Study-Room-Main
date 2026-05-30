@@ -1,5 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import rainSound from "../assets/rain.mp3";
+import forestSound from "../assets/forest.mp3";
+import softSound from "../assets/soft-ambience.mp3";
+import chillSound from "../assets/chill.mp3";
 
 const FocusSounds = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,21 +25,21 @@ const FocusSounds = () => {
       id: 'forest',
       name: 'Forest',
       description: 'Peaceful forest ambiance',
-      url: '/sounds/focus%20sounds/forest.mp3',
+      url: forestSound,
       icon: '🌲'
     },
     {
       id: 'soft',
       name: 'Soft Ambience',
       description: 'Gentle background sounds',
-      url: '/sounds/focus%20sounds/soft.mp3',
+      url: softSound,
       icon: '🔇'
     },
     {
       id: 'chill',
       name: 'Chill Vibes',
       description: 'Relaxing atmosphere',
-      url: '/sounds/focus%20sounds/chill.mp3',
+      url: chillSound,
       icon: '😌'
     }
   ];
