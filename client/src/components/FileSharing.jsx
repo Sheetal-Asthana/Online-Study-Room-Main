@@ -15,7 +15,7 @@ const FileSharing = ({ roomCode, currentUser }) => {
 
   const fetchFiles = async () => {
     try {
-      const response = await API.get(`/files/room/${roomCode}`);
+      const response = await API.get(`/api/files/room/${roomCode}`);
       setFiles(response.data);
     } catch (error) {
       console.error("Error fetching files:", error);
@@ -55,7 +55,7 @@ const FileSharing = ({ roomCode, currentUser }) => {
       formData.append("file", file);
       formData.append("roomCode", roomCode);
 
-      const response = await API.post("/files/upload", formData, {
+      const response = await API.post("/api/files/upload", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -87,7 +87,7 @@ const FileSharing = ({ roomCode, currentUser }) => {
 
   const handleDownload = async (file) => {
     try {
-      const response = await API.get(`/files/download/${file._id}`, {
+      const response = await API.get(`/api/files/download/${file._id}`, {
         responseType: "blob"
       });
       
@@ -112,7 +112,7 @@ const FileSharing = ({ roomCode, currentUser }) => {
     }
 
     try {
-      await API.delete(`/files/${file._id}`);
+      await API.delete(`/api/files/${file._id}`);
       
       // Notify room about file deletion
       const socket = socketService.getSocket();
