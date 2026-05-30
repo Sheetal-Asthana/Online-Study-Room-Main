@@ -15,7 +15,7 @@ function JoinRoom() {
     try {
       const token = localStorage.getItem("token");
       const res = await API.post(
-        "/rooms/join",
+        "/api/rooms/join",
         { roomId, pin },
         { headers: { Authorization: `Bearer ${token}` } }
       );
