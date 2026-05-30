@@ -60,7 +60,7 @@ const ProfileHeader = ({ profile, isOwnProfile, onEdit, onProfileUpdate }) => {
         <div className="profile-photo">
           {profile.profilePhoto?.url ? (
             <img 
-              src={`http://localhost:9000${profile.profilePhoto.url}`} 
+              src={`https://online-study-room-main.onrender.com${profile.profilePhoto.url}`} 
               alt={profile.username}
               onError={(e) => {
                 e.target.style.display = 'none';
