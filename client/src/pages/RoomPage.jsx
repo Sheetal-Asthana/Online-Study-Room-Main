@@ -172,7 +172,7 @@ export default function RoomPage() {
         params.before = beforeTimestamp;
       }
       
-      const response = await API.get(`/messages/room/${roomId}`, { params });
+      const response = await API.get(`/api/messages/room/${roomId}`, { params });
       
       if (beforeTimestamp) {
         // Append older messages at the beginning
@@ -343,7 +343,7 @@ useEffect(() => {
 
       // Also call API to remove from database room members
       const token = localStorage.getItem("token");
-      await API.post("/rooms/leave", 
+      await API.post("/api/rooms/leave", 
         { roomId: roomId },
         { headers: { Authorization: `Bearer ${token}` } }
       );
