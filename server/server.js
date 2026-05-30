@@ -11,7 +11,13 @@ dotenv.config();
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  origin: [
+    "http://localhost:5173",
+    "https://online-study-room-main.vercel.app"
+  ],
+  credentials: true
+}));
 
 // Test route
 app.get("/", (req, res) => {
@@ -29,7 +35,7 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: ["http://localhost:5173","https://room-green-nine.vercel.app"],
+    origin: ["http://localhost:5173","https://online-study-room-main.vercel.app"],
     methods: ["GET", "POST"],
   },
   pingTimeout: 60000,
