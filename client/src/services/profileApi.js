@@ -2,16 +2,16 @@ import API from "./api";
 
 export const profileApi = {
   // Get current user's profile
-  getMyProfile: () => API.get("/profile/me"),
+  getMyProfile: () => API.get("/api/profile/me"),
   
   // Get profile by username
-  getProfileByUsername: (username) => API.get(`/profile/${username}`),
+  getProfileByUsername: (username) => API.get(`/api/profile/${username}`),
   
   // Update profile
-  updateProfile: (profileData) => API.put("/profile/me", profileData),
+  updateProfile: (profileData) => API.put("/api/profile/me", profileData),
   
   // Upload profile picture
-  uploadProfilePic: (formData) => API.post("/profile/upload-profile-pic", formData, {
+  uploadProfilePic: (formData) => API.post("/api/profile/upload-profile-pic", formData, {
     headers: {
       "Content-Type": "multipart/form-data",
     },
@@ -26,7 +26,7 @@ export const profileApi = {
     API.post("/profile/joined-room", { roomId, roomName }),
   
   // Get study statistics
-  getStudyStats: () => API.get("/study-time/stats")
+  getStudyStats: () => API.get("/api/study-time/stats")
 };
 
 export default profileApi;
