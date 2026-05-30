@@ -14,7 +14,7 @@ const FocusSounds = () => {
       id: 'rain',
       name: 'Rain',
       description: 'Gentle rainfall',
-      url: '/sounds/focus%20sounds/rain.mp3',
+      url: 'soft-rain-sfx.wav',
       icon: '🌧️'
     },
     {
