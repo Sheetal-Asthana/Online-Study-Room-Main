@@ -120,20 +120,20 @@ const FileSharing = ({ roomCode, currentUser }) => {
     }
 
     try {
-      console.log("DELETE URL:", `/api/files/${file._id}`);
-      await API.delete(`/api/files/${file._id}`);
+      console.log("DELETE URL:", `/api/files/${file.id}`);
+      await API.delete(`/api/files/${file.id}`);
       
       // Notify room about file deletion
       const socket = socketService.getSocket();
       if (socket) {
         socket.emit("file_deleted", {
           roomCode,
-          fileId: file._id
+          fileId: file.id
         });
       }
 
       // Remove from local state
-      setFiles(prev => prev.filter(f => f._id !== file._id));
+      setFiles(prev => prev.filter(f => f._id !== file.id));
     } catch (error) {
       console.error("Error deleting file:", error);
       alert("Failed to delete file");
