@@ -240,21 +240,45 @@ const VideoConference = ({ roomId, socket, currentUser, roomMembers, isConnected
     }
 
     // Handle incoming remote stream
-    peer.ontrack = (event) => {
-      console.log("📹 Received remote track from:", userId);
-      const [remoteStream] = event.streams;
-      setRemoteStreams(prev => new Map(prev.set(userId, remoteStream)));
+    // peer.ontrack = (event) => {
+    //   console.log("📹 Received remote track from:", userId);
+    //   const [remoteStream] = event.streams;
+    //   setRemoteStreams(prev => new Map(prev.set(userId, remoteStream)));
       
-      // Update video element when it's rendered
-      setTimeout(() => {
-        const videoElement = remoteVideosRef.current.get(userId);
-        if (videoElement) {
-          videoElement.srcObject = remoteStream;
-          console.log("✅ Set remote video source for:", userId);
-        }
-      }, 100);
-    };
+    //   // Update video element when it's rendered
+    //   setTimeout(() => {
+    //     const videoElement = remoteVideosRef.current.get(userId);
+    //     if (videoElement) {
+    //       videoElement.srcObject = remoteStream;
+    //       console.log("✅ Set remote video source for:", userId);
+    //     }
+    //   }, 100);
+    // };
 
+    peer.ontrack = (event) => {
+  console.log("📹 Received remote track from:", userId);
+
+  const [remoteStream] = event.streams;
+
+  setRemoteStreams(prev => {
+    const updated = new Map(prev);
+    updated.set(userId, remoteStream);
+
+    console.log("REMOTE STREAMS SIZE:", updated.size);
+
+    return updated;
+  });
+
+  setTimeout(() => {
+    const videoElement = remoteVideosRef.current.get(userId);
+
+    if (videoElement) {
+      videoElement.srcObject = remoteStream;
+      console.log("✅ Set remote video source for:", userId);
+    }
+  }, 100);
+};
+    
     // Handle ICE candidates
     peer.onicecandidate = (event) => {
       if (event.candidate && socket) {
@@ -604,6 +628,11 @@ const VideoConference = ({ roomId, socket, currentUser, roomMembers, isConnected
         </div>
 
         {/* Remote Videos */}
+        {console.log(
+        "RENDERING REMOTE VIDEOS:",
+         remoteStreams.size,
+         Array.from(remoteStreams.keys())
+        )}
         {Array.from(remoteStreams.entries()).map(([userId, stream]) => {
           const member = roomMembers.find(m => m.userId === userId);
           return (
