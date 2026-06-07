@@ -97,18 +97,36 @@ const VideoConference = ({ roomId, socket, currentUser, roomMembers, isConnected
         localStream.addTrack(videoTrack);
         
         // Replace video track in all peer connections
-        peers.forEach((peer, userId) => {
-          const sender = peer.getSenders().find(s => 
-            s.track && s.track.kind === 'video'
-          );
-          if (sender) {
-            sender.replaceTrack(videoTrack);
-          } else {
-            peer.addTrack(videoTrack, localStream);
-          }
-          // Force renegotiation
-          createOffer(peer, userId);
-        });
+        // peers.forEach((peer, userId) => {
+        //   const sender = peer.getSenders().find(s => 
+        //     s.track && s.track.kind === 'video'
+        //   );
+        //   if (sender) {
+        //     sender.replaceTrack(videoTrack);
+        //   } else {
+        //     peer.addTrack(videoTrack, localStream);
+        //   }
+        //   // Force renegotiation
+        //   createOffer(peer, userId);
+        // });
+
+        peers.forEach(async (peer, userId) => {
+  const sender = peer.getSenders().find(
+    s => s.track && s.track.kind === "video"
+  );
+
+  if (sender) {
+    console.log("🔄 Replacing video track for", userId);
+    await sender.replaceTrack(videoTrack);
+  } else {
+    console.log("➕ Adding video track for", userId);
+    peer.addTrack(videoTrack, localStream);
+  }
+
+  console.log("📨 Renegotiating with", userId);
+
+  await createOffer(peer, userId);
+});
         
         console.log("✅ Video enabled successfully");
       } catch (error) {
@@ -476,7 +494,7 @@ const VideoConference = ({ roomId, socket, currentUser, roomMembers, isConnected
   // Initialize audio stream when component mounts
   useEffect(() => {
     console.log("🎵 Initializing audio stream...");
-    initializeLocalStream(true);
+    initializeLocalStream(false);
   }, []);
 
   // Setup socket event listeners
