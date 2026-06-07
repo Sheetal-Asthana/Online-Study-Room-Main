@@ -91,7 +91,7 @@ const FileSharing = ({ roomCode, currentUser }) => {
   const handleDownload = async (file) => {
     console.log("DOWNLOAD FILE:", file);
     try {
-      const response = await API.get(`/api/files/download/${file._id}`, {
+      const response = await API.get(`/api/files/download/${file.id}`, {
         responseType: "blob"
       });
       
