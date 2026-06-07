@@ -14,6 +14,7 @@ const FileSharing = ({ roomCode, currentUser }) => {
   }, [roomCode]);
 
   const fetchFiles = async () => {
+    console.log("FILES FROM SERVER:", response.data);
     try {
       const response = await API.get(`/api/files/room/${roomCode}`);
       setFiles(response.data);
