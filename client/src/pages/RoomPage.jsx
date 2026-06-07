@@ -233,6 +233,29 @@ export default function RoomPage() {
       console.log("Room members updated:", members);
       setRoomMembers(members);
     });
+//===================== POMODORO =========================
+    socketInstance.on("pomodoro_start", (state) => {
+  console.log("🍅 Pomodoro started");
+
+  setPomodoroTime(state.pomodoroTime);
+  setPomodoroMode(state.pomodoroMode);
+  setIsPomodoroActive(true);
+});
+
+socketInstance.on("pomodoro_pause", () => {
+  console.log("⏸ Pomodoro paused");
+
+  setIsPomodoroActive(false);
+});
+
+socketInstance.on("pomodoro_reset", (state) => {
+  console.log("🔄 Pomodoro reset");
+
+  setPomodoroTime(state.pomodoroTime);
+  setPomodoroMode(state.pomodoroMode);
+  setIsPomodoroActive(false);
+});
+    //============================================
 
     // Add reconnection handling
     socketInstance.on("reconnect", (attemptNumber) => {
@@ -260,6 +283,9 @@ export default function RoomPage() {
       socketInstance.off("reconnect");
       socketInstance.off("reconnect_error");
       socketInstance.off("reconnect_failed");
+      socketInstance.off("pomodoro_start");
+      socketInstance.off("pomodoro_pause");
+      socketInstance.off("pomodoro_reset");
       
       // Cleanup pomodoro timer
       if (pomodoroIntervalRef.current) {
