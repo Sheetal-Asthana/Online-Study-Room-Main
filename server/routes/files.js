@@ -126,7 +126,9 @@ router.get("/download/:fileId", auth, async (req, res) => {
 // Delete file
 router.delete("/:fileId", auth, async (req, res) => {
   try {
+    console.log("DELETE REQUEST ID:", req.params.fileId);
     const file = await File.findById(req.params.fileId);
+    console.log("FOUND FILE:", file);
     
     if (!file) {
       return res.status(404).json({ msg: "File not found" });
