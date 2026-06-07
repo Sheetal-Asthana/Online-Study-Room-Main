@@ -133,7 +133,7 @@ const FileSharing = ({ roomCode, currentUser }) => {
       }
 
       // Remove from local state
-      setFiles(prev => prev.filter(f => f._id !== file.id));
+      setFiles(prev => prev.filter(f => f.id !== file.id));
     } catch (error) {
       console.error("Error deleting file:", error);
       alert("Failed to delete file");
