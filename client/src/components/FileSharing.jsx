@@ -112,12 +112,16 @@ const FileSharing = ({ roomCode, currentUser }) => {
   };
 
   const handleDelete = async (file) => {
+    console.log("FULL FILE OBJECT:", file);
+    console.log("_id =", file._id);
+    console.log("id =", file.id);
     if (!window.confirm(`Are you sure you want to delete "${file.originalName}"?`)) {
       return;
     }
 
     try {
-      await API.delete(`/api/files/${file.id}`);
+      console.log("DELETE URL:", `/api/files/${file._id}`);
+      await API.delete(`/api/files/${file._id}`);
       
       // Notify room about file deletion
       const socket = socketService.getSocket();
