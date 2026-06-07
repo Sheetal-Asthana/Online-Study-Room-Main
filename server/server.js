@@ -327,6 +327,20 @@ socket.on("whiteboard-redo", (data) => {
   });
 });
 
+  // ====================== POMODORO TIMER ===========================
+
+  socket.on("pomodoro_start", (data) => {
+  socket.to(data.roomCode).emit("pomodoro_start", data.state);
+});
+
+socket.on("pomodoro_pause", (data) => {
+  socket.to(data.roomCode).emit("pomodoro_pause");
+});
+
+socket.on("pomodoro_reset", (data) => {
+  socket.to(data.roomCode).emit("pomodoro_reset", data.state);
+});
+
 
   // ==================== VIDEO CONFERENCING EVENTS ====================
 
