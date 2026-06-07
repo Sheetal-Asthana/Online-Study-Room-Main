@@ -103,6 +103,8 @@ const VideoConference = ({ roomId, socket, currentUser, roomMembers, isConnected
           );
           if (sender) {
             sender.replaceTrack(videoTrack);
+          } else {
+            peer.addTrack(videoTrack, localStream);
           }
         });
         
@@ -300,6 +302,7 @@ const VideoConference = ({ roomId, socket, currentUser, roomMembers, isConnected
   const handleVideoOffer = async (data) => {
     const { offer, fromUserId, fromUsername } = data;
     console.log("📨 Received video offer from:", fromUsername);
+    console.log("OFFER RECEIVED:", data);
     
     let peer = peers.get(fromUserId);
     if (!peer) {
@@ -329,6 +332,8 @@ const VideoConference = ({ roomId, socket, currentUser, roomMembers, isConnected
   const handleVideoAnswer = async (data) => {
     const { answer, fromUserId } = data;
     console.log("📨 Received video answer from:", fromUserId);
+    console.log("PEERS MAP:", peers);
+    console.log("FOUND PEER:", peers.get(fromUserId));
     
     const peer = peers.get(fromUserId);
     
@@ -346,6 +351,8 @@ const VideoConference = ({ roomId, socket, currentUser, roomMembers, isConnected
   const handleIceCandidate = async (data) => {
     const { candidate, fromUserId } = data;
     const peer = peers.get(fromUserId);
+    console.log("ICE RECEIVED:", data);
+    console.log("FOUND PEER:", peers.get(data.fromUserId));
     
     if (peer && candidate) {
       try {
