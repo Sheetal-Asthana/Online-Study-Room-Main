@@ -117,7 +117,7 @@ const FileSharing = ({ roomCode, currentUser }) => {
     }
 
     try {
-      await API.delete(`/api/files/${file._id}`);
+      await API.delete(`/api/files/${file.id}`);
       
       // Notify room about file deletion
       const socket = socketService.getSocket();
