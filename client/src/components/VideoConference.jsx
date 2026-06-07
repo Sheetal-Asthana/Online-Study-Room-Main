@@ -106,6 +106,8 @@ const VideoConference = ({ roomId, socket, currentUser, roomMembers, isConnected
           } else {
             peer.addTrack(videoTrack, localStream);
           }
+          // Force renegotiation
+          createOffer(peer, userId);
         });
         
         console.log("✅ Video enabled successfully");
@@ -265,6 +267,12 @@ const VideoConference = ({ roomId, socket, currentUser, roomMembers, isConnected
     updated.set(userId, remoteStream);
 
     console.log("REMOTE STREAMS SIZE:", updated.size);
+    console.log(
+  "TRACK INFO",
+  event.track.kind,
+  event.track.enabled,
+  event.track.readyState
+);
 
     return updated;
   });
@@ -468,7 +476,7 @@ const VideoConference = ({ roomId, socket, currentUser, roomMembers, isConnected
   // Initialize audio stream when component mounts
   useEffect(() => {
     console.log("🎵 Initializing audio stream...");
-    initializeLocalStream(false);
+    initializeLocalStream(true);
   }, []);
 
   // Setup socket event listeners
@@ -646,7 +654,7 @@ const VideoConference = ({ roomId, socket, currentUser, roomMembers, isConnected
                 aspectRatio: "16/9"
               }}
             >
-              <video
+              {/* <video
                 ref={el => {
                   if (el) {
                     remoteVideosRef.current.set(userId, el);
@@ -659,7 +667,29 @@ const VideoConference = ({ roomId, socket, currentUser, roomMembers, isConnected
                   height: "100%",
                   objectFit: "cover"
                 }}
-              />
+              /> */}
+              <video
+  ref={el => {
+    if (el) {
+      remoteVideosRef.current.set(userId, el);
+
+      if (el.srcObject !== stream) {
+        el.srcObject = stream;
+      }
+
+      el.play()
+        .then(() => console.log("▶ Remote video playing:", userId))
+        .catch(err => console.error("❌ Play failed:", err));
+    }
+  }}
+  autoPlay
+  playsInline
+  style={{
+    width: "100%",
+    height: "100%",
+    objectFit: "cover"
+  }}
+/>
               <div style={{
                 position: "absolute",
                 bottom: "8px",
